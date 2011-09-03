@@ -3,6 +3,9 @@
 require('db_funcs.php');
 require('shortening_funcs.php');
 
+/* Base url - end with a forward slash */
+$BASEURL = "";
+
 /* Database vars */
 $DBURL  = "";
 $DBNAME = "";
@@ -13,7 +16,7 @@ $DBPASS = "";
 if (isset($_GET["e"])) {
   connect($DBURL, $DBNAME, $DBUSER, $DBPASS);
   $id = insertURL($_GET["e"]);
-  echo encode($id, $alphabet);
+  echo "$BASEURL" . encode($id, $alphabet);
   disconnect();
 }
 //Or decode?
