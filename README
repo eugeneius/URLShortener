@@ -1,0 +1,4 @@
+Set the DB information in shorten.php
+
+/shorten.php?e=http://someurl.com/here to encode
+/code to decode and redirect
