@@ -21,8 +21,7 @@ function disconnect() {
  */
 function createTables() {
   //Create the table
-  mysql_query("CREATE TABLE dictionary(id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), url VARCHAR(256))");
-  mysql_query("CREATE TABLE reverseDictionary(url VARCHAR(256), PRIMARY KEY(url), id INT NOT NULL )");
+  mysql_query("CREATE TABLE dictionary(id INT NOT NULL AUTO_INCREMENT, url VARCHAR(256), PRIMARY KEY(id), KEY(url, id))");
 }
 
 /*
@@ -30,7 +29,7 @@ function createTables() {
  */
 function insertURL($url) {
   //Check if the url exists
-  $alreadyExists = mysql_query("SELECT id FROM reverseDictionary WHERE url='".$url."'") or die(mysql_error());
+  $alreadyExists = mysql_query("SELECT id FROM dictionary WHERE url='".$url."'") or die(mysql_error());
   $row = mysql_fetch_array($alreadyExists);
   $id = $row['id'];
 
@@ -43,9 +42,6 @@ function insertURL($url) {
     $return = mysql_query("SELECT id FROM dictionary ORDER BY id DESC LIMIT 1");
     $return = mysql_fetch_array($return);
     $id = $return['id'];
-
-    //Add to the reverse look up dictionary
-    mysql_query("INSERT INTO reverseDictionary(url, id) VALUES('".$url."', '".$id."') ") or die(mysql_error());
   }
 
   //Return the id for encoding
@@ -66,7 +62,6 @@ function retrieveURL($id) {
  */
 function clearTables() {
   mysql_query("TRUNCATE TABLE dictionary") or die(mysql_error());
-  mysql_query("TRUNCATE TABLE reverseDictionary") or die(mysql_error());
 }
 
 ?>
