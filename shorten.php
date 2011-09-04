@@ -7,7 +7,7 @@ require('shortening_funcs.php');
 $BASEURL = "http://examp.le/";
 
 /* Regexp to prevent recursive shortening/cyclic redirections */
-$REGEXP = "/^http:\/\/(www.)?examp\.le\/[a-zA-Z0-9]+$/";
+$REGEXP  = "/^http:\/\/(www.)?examp\.le(\/)+(shorten\.php(\/)*\?d=)?[a-zA-Z0-9]+$/";
 
 /* Database vars */
 $DBURL  = "";
