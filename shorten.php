@@ -4,7 +4,10 @@ require('db_funcs.php');
 require('shortening_funcs.php');
 
 /* Base url - end with a forward slash */
-$BASEURL = "";
+$BASEURL = "http://examp.le/";
+
+/* Regexp to prevent recursive shortening/cyclic redirections */
+$REGEXP = "/^http:\/\/(www.)?examp\.le\/[a-zA-Z0-9]+$/";
 
 /* Database vars */
 $DBURL  = "";
@@ -14,10 +17,14 @@ $DBPASS = "";
 
 //Do we encode?
 if (isset($_GET["e"])) {
-  connect($DBURL, $DBNAME, $DBUSER, $DBPASS);
-  $id = insertURL($_GET["e"]);
-  echo "$BASEURL" . encode($id, $alphabet);
-  disconnect();
+  if (preg_match($REGEXP, $_GET["e"]))
+    $forwardingAddress = "http://www.google.com";
+  else {
+    connect($DBURL, $DBNAME, $DBUSER, $DBPASS);
+    $id = insertURL($_GET["e"]);
+    echo "$BASEURL" . encode($id, $alphabet);
+    disconnect();
+  }
 }
 //Or decode?
 else if (isset($_GET["d"])) {
