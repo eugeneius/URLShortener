@@ -21,7 +21,7 @@ function disconnect() {
  */
 function createTables() {
   //Create the table
-  mysql_query("CREATE TABLE dictionary(id INT NOT NULL AUTO_INCREMENT, url VARCHAR(256), PRIMARY KEY(id), KEY(url, id))");
+  mysql_query("CREATE TABLE dictionary(id INT NOT NULL AUTO_INCREMENT, url VARCHAR(255), PRIMARY KEY(id), KEY(url, id))");
 }
 
 /*
